@@ -1,0 +1,333 @@
+PACKAGE parking_system
+PUBLIC
+WITH deployment;
+--WITH Base_Types;
+
+SYSTEM parking
+END parking;
+
+SYSTEM IMPLEMENTATION parking.impl
+	SUBCOMPONENTS
+		cpu: PROCESSOR CPU;
+		system_bus: BUS system_bus;
+		RAM: MEMORY RAM;
+
+		entry_camera: DEVICE camera;
+		exit_camera: DEVICE camera;
+		entry_gate: DEVICE gate;
+		exit_gate: DEVICE gate;
+		entry_driveway_sensor: DEVICE sensor;
+		exit_driveway_sensor: DEVICE sensor;
+		entry_gate_passing_sensor: DEVICE sensor;
+		exit_gate_passing_sensor: DEVICE sensor;
+		parking_display: DEVICE parking_display;
+		network_module: DEVICE network_module;
+
+		main: PROCESS controller.impl;
+
+	CONNECTIONS
+		c1: port main.open_entry_gate -> entry_gate.open_gate;
+		c2: port entry_driveway_sensor.car_detected -> entry_camera.start_image_acquisition;
+		c3: port exit_driveway_sensor.car_detected -> exit_camera.start_image_acquisition;
+		c4: port entry_camera.plates_data -> main.image_input;
+		c5: port exit_gate_passing_sensor.car_detected -> main.car_on_exit_gate_passing_sensor;
+		c6: port entry_gate_passing_sensor.car_detected -> main.car_on_entry_gate_passing_sensor;
+		c7: port main.close_entry_gate -> entry_gate.close_gate;
+		c8: port main.close_exit_gate -> exit_gate.close_gate;
+		c9: port main.tables_wallet_check -> network_module.tables_wallet_check;
+		c10: port exit_camera.plates_data -> main.exit_image_input;
+		c11: port main.plate_and_calculated_price -> network_module.tables_and_price;
+		c12: port network_module.request_delivered -> exit_gate.open_gate;
+		c13: port network_module.sufficient_wallet_ballance -> main.sufficient_wallet_balance;
+		c14: port network_module.insufficient_wallet_balance -> parking_display.no_money;
+		c15: port network_module.return_another_parking -> parking_display.display_another;
+		c16: port main.find_another -> network_module.find_antoher_parking;
+		
+		ba1: bus access system_bus -> entry_camera.system_bus;
+		ba2: bus access system_bus -> exit_camera.system_bus;
+		ba3: bus access system_bus -> parking_display.system_bus;
+		ba4: bus access system_bus -> RAM.system_bus;
+		ba5: bus access system_bus -> cpu.system_bus;
+		ba6: bus access system_bus -> exit_gate_passing_sensor.system_bus;
+		ba7: bus access entry_gate_passing_sensor.system_bus -> system_bus;
+		ba8: bus access entry_driveway_sensor.system_bus -> system_bus;
+		ba9: bus access exit_driveway_sensor.system_bus -> system_bus;
+		ba10: bus access system_bus -> network_module.system_bus;
+
+
+	PROPERTIES
+		Actual_Memory_Binding => (REFERENCE (ram)) APPLIES TO main;
+		Actual_Processor_Binding => (REFERENCE (cpu)) APPLIES TO main;
+
+END parking.impl;
+
+DEVICE camera
+	FEATURES
+		system_bus: REQUIRES BUS ACCESS system_bus;
+		start_image_acquisition: in event port;
+		plates_data: out event data port;
+		
+	PROPERTIES
+		Compute_Execution_Time => 20ms .. 40ms;
+		Deadline => 400ms;
+END camera;
+
+DEVICE gate 
+	FEATURES
+		open_gate: in event port;
+		close_gate: in event port;
+	PROPERTIES
+		Compute_Execution_Time => 20ms .. 40ms;
+		Deadline => 400ms;
+END gate;
+
+DEVICE sensor 
+	FEATURES
+		car_detected: out event port;
+		system_bus: REQUIRES BUS ACCESS system_bus;
+	PROPERTIES
+		Compute_Execution_Time => 50ms .. 100ms;
+		Deadline => 400ms;
+END sensor;
+	
+DEVICE parking_display
+FEATURES
+	system_bus: REQUIRES BUS ACCESS system_bus;			
+	
+	no_money: in event port;
+	display_another: in data port;
+PROPERTIES
+	Compute_Execution_Time => 50ms .. 100ms;
+	Deadline => 400ms;	
+END parking_display;
+
+DEVICE network_module
+	FEATURES
+		system_bus: REQUIRES BUS ACCESS system_bus;
+
+		request_delivered: out event port;
+		sufficient_wallet_ballance: out event port;
+		insufficient_wallet_balance: out event port;
+		
+		tables_and_price: in event data port;
+		tables_wallet_check: in event data port;
+		
+		find_antoher_parking: in event port;
+		return_another_parking: out event data port;
+		
+	PROPERTIES
+		Compute_Execution_Time => 10ms .. 50ms;
+		Deadline => 400ms;
+
+end network_module;
+
+THREAD image_processing_thread
+	FEATURES
+		image_input: in event data port;
+		plate_number: out event data port;
+		
+END image_processing_thread;
+
+THREAD IMPLEMENTATION image_processing_thread.impl
+	CALLS
+		subprog: {
+			get_plate_data_from_image: SUBPROGRAM get_plate_data_from_image;
+		};
+	CONNECTIONS
+		c1: parameter image_input -> get_plate_data_from_image.plate_image;
+		c2: parameter get_plate_data_from_image.plate_number -> plate_number;
+	PROPERTIES
+		Priority => 21;
+		Dispatch_Protocol => Aperiodic;
+		Compute_Execution_Time => 10ms .. 50ms;
+		Deadline => 400ms;
+END image_processing_thread.impl;
+
+THREAD IMPLEMENTATION image_processing_thread.impl2
+	CALLS
+		subprog: {
+			get_plate_data_from_image: SUBPROGRAM get_plate_data_from_image;
+		};
+	CONNECTIONS
+		c1: parameter image_input -> get_plate_data_from_image.plate_image;
+		c2: parameter get_plate_data_from_image.plate_number -> plate_number;
+	PROPERTIES
+		Priority => 21;
+		Dispatch_Protocol => Aperiodic;
+		Compute_Execution_Time => 10ms .. 100ms;
+		Deadline => 400ms;
+END image_processing_thread.impl2;
+
+
+SUBPROGRAM get_plate_data_from_image
+	FEATURES
+		plate_image: in parameter;
+		plate_number: out parameter;
+end get_plate_data_from_image;
+	
+
+THREAD check_slots_thread
+	FEATURES
+		check_slots: in event port;
+		open_gate: out event data port;
+		find_another: out event data port;
+END check_slots_thread;
+
+THREAD IMPLEMENTATION check_slots_thread.impl
+	CALLS
+		subprog: {
+			check_slots_function: SUBPROGRAM check_slots_function;
+		};
+	CONNECTIONS 
+		c1: parameter check_slots_function.slot_available -> open_gate;
+		c2: parameter check_slots_function.slot_unavailable -> find_another;
+	PROPERTIES
+		Priority => 21;
+		Dispatch_Protocol => Aperiodic;
+		Compute_Execution_Time => 10ms .. 40ms;
+		Deadline => 400ms;
+END check_slots_thread.impl;
+
+SUBPROGRAM check_slots_function
+	FEATURES 
+		slot_available: out parameter;
+		slot_unavailable: out parameter;
+END check_slots_function;
+	
+THREAD car_passed_gate_handler_thread
+	FEATURES
+		car_on_entry_gate_passing_sensor: in event port;
+		close_entry_gate: out event port;
+end car_passed_gate_handler_thread;
+
+THREAD IMPLEMENTATION car_passed_gate_handler_thread.impl
+	CALLS
+		subprog: {
+			close_entry_gate_and_increment: SUBPROGRAM close_entry_gate_and_increment;
+		};
+CONNECTIONS
+	c1: port close_entry_gate_and_increment.close_entry_gate -> close_entry_gate;
+PROPERTIES
+	Priority => 11;
+	Dispatch_Protocol => Aperiodic;
+	Compute_Execution_Time => 10ms .. 30ms;
+	Deadline => 400ms;
+end car_passed_gate_handler_thread.impl;
+
+SUBPROGRAM close_entry_gate_and_increment
+	FEATURES
+		close_entry_gate: out event port;	
+end close_entry_gate_and_increment;
+	
+
+THREAD calculate_price
+	FEATURES
+		plate_number: in event data port;
+		plate_and_calculated_price: out event data port;
+end calculate_price;
+
+THREAD IMPLEMENTATION calculate_price.impl
+	CALLS
+		subprog: {
+			calculate_price_for_given_plate: SUBPROGRAM calculate_price_for_given_plate;
+		};
+	CONNECTIONS
+		c1: parameter plate_number -> calculate_price_for_given_plate.plate_number;
+		c2: parameter calculate_price_for_given_plate.plate_and_calculated_price -> plate_and_calculated_price;
+	PROPERTIES
+		Priority => 21;
+		Dispatch_Protocol => Aperiodic;
+		Compute_Execution_Time => 10ms .. 30ms;
+		Deadline => 400ms;
+end calculate_price.impl;
+	
+	SUBPROGRAM calculate_price_for_given_plate
+		FEATURES
+			plate_number: in parameter;
+			plate_and_calculated_price: out parameter;
+	end calculate_price_for_given_plate;
+
+	THREAD car_passed_exit_thread
+		FEATURES
+			car_detected: in event port;
+			close_gate: out event port;
+	end car_passed_exit_thread;
+
+THREAD IMPLEMENTATION car_passed_exit_thread.impl
+	CALLS
+		subprog: {
+			close_exit_gate_and_decrement: SUBPROGRAM close_exit_gate_and_decrement;
+		};
+	CONNECTIONS
+		c1: port close_exit_gate_and_decrement.close_exit_gate -> close_gate;
+	PROPERTIES
+		Priority => 11;
+		Dispatch_Protocol => Aperiodic;
+		Compute_Execution_Time => 10ms .. 30ms;
+		Deadline => 400ms;
+end car_passed_exit_thread.impl;
+	
+SUBPROGRAM close_exit_gate_and_decrement
+	FEATURES
+		close_exit_gate: out event port;	
+end close_exit_gate_and_decrement;
+
+PROCESS controller
+	FEATURES
+		open_entry_gate: out event port;
+		car_on_exit_gate_passing_sensor: in event port;
+		close_entry_gate: out event port;
+		close_exit_gate: out event port;
+		car_on_entry_gate_passing_sensor: in event port;
+		sufficient_wallet_balance: in event port;
+		find_another: out event port;
+		plate_and_calculated_price: out event data port;
+		image_input: in event data port;
+		exit_image_input: in event data port;
+		tables_wallet_check: out event data port;
+		
+end controller;
+
+PROCESS IMPLEMENTATION controller.impl
+	SUBCOMPONENTS
+		entry_image_processing_thread: THREAD image_processing_thread.impl;
+		exit_image_processing_thread: THREAD image_processing_thread.impl2;
+		car_passed_gate_handler_thread: THREAD car_passed_gate_handler_thread.impl;
+		calculate_price: THREAD calculate_price.impl;
+		car_passed_exit_thread: THREAD car_passed_exit_thread.impl;
+		check_slots_thread: THREAD check_slots_thread.impl;
+
+	CONNECTIONS 
+		c1: port image_input -> entry_image_processing_thread.image_input;
+		c2: port car_on_entry_gate_passing_sensor -> car_passed_gate_handler_thread.car_on_entry_gate_passing_sensor;
+		c3: port car_passed_gate_handler_thread.close_entry_gate -> close_entry_gate;
+		c4: port calculate_price.plate_and_calculated_price -> plate_and_calculated_price;
+		c5: port car_on_exit_gate_passing_sensor -> car_passed_exit_thread.car_detected;
+		c6: port car_passed_exit_thread.close_gate -> close_exit_gate;
+		c7: port check_slots_thread.open_gate -> open_entry_gate;
+		c8: port check_slots_thread.find_another -> find_another;	
+		c9: port exit_image_input -> exit_image_processing_thread.image_input;
+		c10: port exit_image_processing_thread.plate_number -> calculate_price.plate_number;
+		c11: port entry_image_processing_thread.plate_number -> tables_wallet_check;
+		c12: port sufficient_wallet_balance -> check_slots_thread.check_slots;
+		
+end controller.impl;
+
+PROCESSOR CPU
+	FEATURES
+		system_bus: REQUIRES BUS ACCESS system_bus;
+	PROPERTIES
+		Clock_Period => 200ns;
+		Scheduling_Protocol => (Posix_1003_Highest_Priority_First_Protocol);
+		Deployment::Execution_Platform => Native;
+		Priority_Range => 0 .. 255;
+END CPU;
+
+BUS system_bus
+END system_bus;
+
+MEMORY RAM
+	FEATURES
+		system_bus: REQUIRES BUS ACCESS system_bus;
+END RAM;
+END parking_system;
