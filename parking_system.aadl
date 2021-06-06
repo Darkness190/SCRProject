@@ -137,7 +137,7 @@ THREAD IMPLEMENTATION image_processing_thread.impl
 		c1: parameter image_input -> get_plate_data_from_image.plate_image;
 		c2: parameter get_plate_data_from_image.plate_number -> plate_number;
 	PROPERTIES
-		Priority => 21;
+		Priority => 3;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 50ms;
 		Deadline => 400ms;
@@ -152,7 +152,7 @@ THREAD IMPLEMENTATION image_processing_thread.impl2
 		c1: parameter image_input -> get_plate_data_from_image.plate_image;
 		c2: parameter get_plate_data_from_image.plate_number -> plate_number;
 	PROPERTIES
-		Priority => 21;
+		Priority => 3;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 100ms;
 		Deadline => 400ms;
@@ -182,7 +182,7 @@ THREAD IMPLEMENTATION check_slots_thread.impl
 		c1: parameter check_slots_function.slot_available -> open_gate;
 		c2: parameter check_slots_function.slot_unavailable -> find_another;
 	PROPERTIES
-		Priority => 21;
+		Priority => 2;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 40ms;
 		Deadline => 400ms;
@@ -208,7 +208,7 @@ THREAD IMPLEMENTATION car_passed_gate_handler_thread.impl
 CONNECTIONS
 	c1: port close_entry_gate_and_increment.close_entry_gate -> close_entry_gate;
 PROPERTIES
-	Priority => 11;
+	Priority => 4;
 	Dispatch_Protocol => Aperiodic;
 	Compute_Execution_Time => 10ms .. 30ms;
 	Deadline => 400ms;
@@ -235,7 +235,7 @@ THREAD IMPLEMENTATION calculate_price.impl
 		c1: parameter plate_number -> calculate_price_for_given_plate.plate_number;
 		c2: parameter calculate_price_for_given_plate.plate_and_calculated_price -> plate_and_calculated_price;
 	PROPERTIES
-		Priority => 21;
+		Priority => 1;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
 		Deadline => 400ms;
@@ -261,7 +261,7 @@ THREAD IMPLEMENTATION car_passed_exit_thread.impl
 	CONNECTIONS
 		c1: port close_exit_gate_and_decrement.close_exit_gate -> close_gate;
 	PROPERTIES
-		Priority => 11;
+		Priority => 4;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
 		Deadline => 400ms;
