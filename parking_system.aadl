@@ -146,7 +146,7 @@ THREAD IMPLEMENTATION image_processing_thread.impl
 		c1: parameter image_input -> get_plate_data_from_image.plate_image;
 		c2: parameter get_plate_data_from_image.plate_number -> plate_number;
 	PROPERTIES
-		Priority => 5;
+		Priority => 4;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 50ms;
 		Deadline => 1000ms;
@@ -161,7 +161,7 @@ THREAD IMPLEMENTATION image_processing_thread.impl2
 		c1: parameter image_input -> get_plate_data_from_image.plate_image;
 		c2: parameter get_plate_data_from_image.plate_number -> plate_number;
 	PROPERTIES
-		Priority => 5;
+		Priority => 4;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 100ms;
 		Deadline => 1000ms;
@@ -191,7 +191,7 @@ THREAD IMPLEMENTATION check_slots_thread.impl
 		c1: parameter check_slots_function.slot_available -> open_gate;
 		c2: parameter check_slots_function.slot_unavailable -> find_another;
 	PROPERTIES
-		Priority => 4;
+		Priority => 3;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 40ms;
 		Deadline => 1000ms;
@@ -217,7 +217,7 @@ THREAD IMPLEMENTATION car_passed_gate_handler_thread.impl
 CONNECTIONS
 	c1: port close_entry_gate_and_increment.close_entry_gate -> close_entry_gate;
 PROPERTIES
-	Priority => 2;
+	Priority => 5;
 	Dispatch_Protocol => Aperiodic;
 	Compute_Execution_Time => 10ms .. 30ms;
 	Deadline => 1000ms;
@@ -244,7 +244,7 @@ THREAD IMPLEMENTATION calculate_price.impl
 		c1: parameter plate_number -> calculate_price_for_given_plate.plate_number;
 		c2: parameter calculate_price_for_given_plate.plate_and_calculated_price -> plate_and_calculated_price;
 	PROPERTIES
-		Priority => 4;
+		Priority => 2;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
 		Deadline => 1000ms;
@@ -270,7 +270,7 @@ THREAD IMPLEMENTATION car_passed_exit_thread.impl
 	CONNECTIONS
 		c1: port close_exit_gate_and_decrement.close_exit_gate -> close_gate;
 	PROPERTIES
-		Priority => 2;
+		Priority => 5;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
 		Deadline => 1000ms;
@@ -437,12 +437,12 @@ end controller;
 PROCESS IMPLEMENTATION controller.impl
 	SUBCOMPONENTS
 		display_parking_address: THREAD display_message_thread.addres_impl; -- 1
-		entry_image_processing_thread: THREAD image_processing_thread.impl; -- 5
-		exit_image_processing_thread: THREAD image_processing_thread.impl2; -- 5
-		car_passed_gate_handler_thread: THREAD car_passed_gate_handler_thread.impl; -- 2
-		calculate_price: THREAD calculate_price.impl; -- 4
-		car_passed_exit_thread: THREAD car_passed_exit_thread.impl; -- 2
-		check_slots_thread: THREAD check_slots_thread.impl; -- 4
+		entry_image_processing_thread: THREAD image_processing_thread.impl; -- 4
+		exit_image_processing_thread: THREAD image_processing_thread.impl2; -- 4
+		car_passed_gate_handler_thread: THREAD car_passed_gate_handler_thread.impl; -- 5
+		calculate_price: THREAD calculate_price.impl; -- 2
+		car_passed_exit_thread: THREAD car_passed_exit_thread.impl; -- 5
+		check_slots_thread: THREAD check_slots_thread.impl; -- 3
 		start_exit_camera: THREAD start_camera.exit_impl; -- 6
 		start_entry_camera: THREAD start_camera.entry_impl; -- 6
 		should_open_exit_gate: THREAD open_exit_gate.impl; -- 3

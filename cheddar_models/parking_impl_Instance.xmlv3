@@ -100,7 +100,7 @@
       <capacity>50</capacity>
       <deadline>1000</deadline>
       <start_time>0</start_time>
-      <priority>5</priority>
+      <priority>4</priority>
       <blocking_time>0</blocking_time>
       <policy>Sched_Fifo</policy>
       <offsets/>
@@ -127,7 +127,7 @@
       <capacity>100</capacity>
       <deadline>1000</deadline>
       <start_time>0</start_time>
-      <priority>5</priority>
+      <priority>4</priority>
       <blocking_time>0</blocking_time>
       <policy>Sched_Fifo</policy>
       <offsets/>
@@ -154,7 +154,7 @@
       <capacity>30</capacity>
       <deadline>1000</deadline>
       <start_time>0</start_time>
-      <priority>2</priority>
+      <priority>5</priority>
       <blocking_time>0</blocking_time>
       <policy>Sched_Fifo</policy>
       <offsets/>
@@ -181,7 +181,7 @@
       <capacity>30</capacity>
       <deadline>1000</deadline>
       <start_time>0</start_time>
-      <priority>4</priority>
+      <priority>2</priority>
       <blocking_time>0</blocking_time>
       <policy>Sched_Fifo</policy>
       <offsets/>
@@ -208,7 +208,7 @@
       <capacity>30</capacity>
       <deadline>1000</deadline>
       <start_time>0</start_time>
-      <priority>2</priority>
+      <priority>5</priority>
       <blocking_time>0</blocking_time>
       <policy>Sched_Fifo</policy>
       <offsets/>
@@ -235,7 +235,7 @@
       <capacity>40</capacity>
       <deadline>1000</deadline>
       <start_time>0</start_time>
-      <priority>4</priority>
+      <priority>3</priority>
       <blocking_time>0</blocking_time>
       <policy>Sched_Fifo</policy>
       <offsets/>

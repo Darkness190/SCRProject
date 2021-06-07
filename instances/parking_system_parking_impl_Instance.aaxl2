@@ -656,7 +656,7 @@
       <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
         <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Thread_Properties.aadl#Thread_Properties.Priority"/>
         <ownedValue>
-          <ownedValue xsi:type="aadl2:IntegerLiteral" value="5"/>
+          <ownedValue xsi:type="aadl2:IntegerLiteral" value="4"/>
         </ownedValue>
         <propertyAssociation href="../parking_system.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedPropertyAssociation.0"/>
       </ownedPropertyAssociation>
@@ -742,7 +742,7 @@
       <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
         <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Thread_Properties.aadl#Thread_Properties.Priority"/>
         <ownedValue>
-          <ownedValue xsi:type="aadl2:IntegerLiteral" value="5"/>
+          <ownedValue xsi:type="aadl2:IntegerLiteral" value="4"/>
         </ownedValue>
         <propertyAssociation href="../parking_system.aadl#/0/@ownedPublicSection/@ownedClassifier.9/@ownedPropertyAssociation.0"/>
       </ownedPropertyAssociation>
@@ -828,7 +828,7 @@
       <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
         <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Thread_Properties.aadl#Thread_Properties.Priority"/>
         <ownedValue>
-          <ownedValue xsi:type="aadl2:IntegerLiteral" value="2"/>
+          <ownedValue xsi:type="aadl2:IntegerLiteral" value="5"/>
         </ownedValue>
         <propertyAssociation href="../parking_system.aadl#/0/@ownedPublicSection/@ownedClassifier.15/@ownedPropertyAssociation.0"/>
       </ownedPropertyAssociation>
@@ -896,7 +896,7 @@
       <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
         <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Thread_Properties.aadl#Thread_Properties.Priority"/>
         <ownedValue>
-          <ownedValue xsi:type="aadl2:IntegerLiteral" value="4"/>
+          <ownedValue xsi:type="aadl2:IntegerLiteral" value="2"/>
         </ownedValue>
         <propertyAssociation href="../parking_system.aadl#/0/@ownedPublicSection/@ownedClassifier.18/@ownedPropertyAssociation.0"/>
       </ownedPropertyAssociation>
@@ -982,7 +982,7 @@
       <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
         <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Thread_Properties.aadl#Thread_Properties.Priority"/>
         <ownedValue>
-          <ownedValue xsi:type="aadl2:IntegerLiteral" value="2"/>
+          <ownedValue xsi:type="aadl2:IntegerLiteral" value="5"/>
         </ownedValue>
         <propertyAssociation href="../parking_system.aadl#/0/@ownedPublicSection/@ownedClassifier.21/@ownedPropertyAssociation.0"/>
       </ownedPropertyAssociation>
@@ -1050,7 +1050,7 @@
       <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
         <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Thread_Properties.aadl#Thread_Properties.Priority"/>
         <ownedValue>
-          <ownedValue xsi:type="aadl2:IntegerLiteral" value="4"/>
+          <ownedValue xsi:type="aadl2:IntegerLiteral" value="3"/>
         </ownedValue>
         <propertyAssociation href="../parking_system.aadl#/0/@ownedPublicSection/@ownedClassifier.12/@ownedPropertyAssociation.0"/>
       </ownedPropertyAssociation>
