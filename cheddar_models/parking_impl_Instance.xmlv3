@@ -66,93 +66,12 @@
   <tasks>
     <aperiodic_task id="5">
       <object_type>Task_Object_Type</object_type>
-      <name>parking_impl_Instance.main.entry_image_processing_thread</name>
-      <task_type>Aperiodic_Type</task_type>
-      <cpu_name>parking_impl_Instance.cpu</cpu_name>
-      <address_space_name>parking_impl_Instance.main</address_space_name>
-      <capacity>50</capacity>
-      <deadline>400</deadline>
-      <start_time>0</start_time>
-      <priority>3</priority>
-      <blocking_time>0</blocking_time>
-      <policy>Sched_Fifo</policy>
-      <offsets/>
-      <text_memory_size>0</text_memory_size>
-      <text_memory_start_address>0</text_memory_start_address>
-      <stack_memory_size>0</stack_memory_size>
-      <criticality>0</criticality>
-      <context_switch_overhead>0</context_switch_overhead>
-      <cfg_relocatable>false</cfg_relocatable>
-      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
-      <mils_integrity_level>Low</mils_integrity_level>
-      <mils_component>SLS</mils_component>
-      <mils_task>Application</mils_task>
-      <mils_compliant>false</mils_compliant>
-      <access_memory_number>0</access_memory_number>
-      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
-    </aperiodic_task>
-    <aperiodic_task id="6">
-      <object_type>Task_Object_Type</object_type>
-      <name>parking_impl_Instance.main.exit_image_processing_thread</name>
-      <task_type>Aperiodic_Type</task_type>
-      <cpu_name>parking_impl_Instance.cpu</cpu_name>
-      <address_space_name>parking_impl_Instance.main</address_space_name>
-      <capacity>100</capacity>
-      <deadline>400</deadline>
-      <start_time>0</start_time>
-      <priority>3</priority>
-      <blocking_time>0</blocking_time>
-      <policy>Sched_Fifo</policy>
-      <offsets/>
-      <text_memory_size>0</text_memory_size>
-      <text_memory_start_address>0</text_memory_start_address>
-      <stack_memory_size>0</stack_memory_size>
-      <criticality>0</criticality>
-      <context_switch_overhead>0</context_switch_overhead>
-      <cfg_relocatable>false</cfg_relocatable>
-      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
-      <mils_integrity_level>Low</mils_integrity_level>
-      <mils_component>SLS</mils_component>
-      <mils_task>Application</mils_task>
-      <mils_compliant>false</mils_compliant>
-      <access_memory_number>0</access_memory_number>
-      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
-    </aperiodic_task>
-    <aperiodic_task id="7">
-      <object_type>Task_Object_Type</object_type>
-      <name>parking_impl_Instance.main.car_passed_gate_handler_thread</name>
+      <name>parking_impl_Instance.main.display_parking_address</name>
       <task_type>Aperiodic_Type</task_type>
       <cpu_name>parking_impl_Instance.cpu</cpu_name>
       <address_space_name>parking_impl_Instance.main</address_space_name>
       <capacity>30</capacity>
-      <deadline>400</deadline>
-      <start_time>0</start_time>
-      <priority>4</priority>
-      <blocking_time>0</blocking_time>
-      <policy>Sched_Fifo</policy>
-      <offsets/>
-      <text_memory_size>0</text_memory_size>
-      <text_memory_start_address>0</text_memory_start_address>
-      <stack_memory_size>0</stack_memory_size>
-      <criticality>0</criticality>
-      <context_switch_overhead>0</context_switch_overhead>
-      <cfg_relocatable>false</cfg_relocatable>
-      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
-      <mils_integrity_level>Low</mils_integrity_level>
-      <mils_component>SLS</mils_component>
-      <mils_task>Application</mils_task>
-      <mils_compliant>false</mils_compliant>
-      <access_memory_number>0</access_memory_number>
-      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
-    </aperiodic_task>
-    <aperiodic_task id="8">
-      <object_type>Task_Object_Type</object_type>
-      <name>parking_impl_Instance.main.calculate_price</name>
-      <task_type>Aperiodic_Type</task_type>
-      <cpu_name>parking_impl_Instance.cpu</cpu_name>
-      <address_space_name>parking_impl_Instance.main</address_space_name>
-      <capacity>30</capacity>
-      <deadline>400</deadline>
+      <deadline>1000</deadline>
       <start_time>0</start_time>
       <priority>1</priority>
       <blocking_time>0</blocking_time>
@@ -172,14 +91,95 @@
       <access_memory_number>0</access_memory_number>
       <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
     </aperiodic_task>
-    <aperiodic_task id="9">
+    <aperiodic_task id="6">
       <object_type>Task_Object_Type</object_type>
-      <name>parking_impl_Instance.main.car_passed_exit_thread</name>
+      <name>parking_impl_Instance.main.entry_image_processing_thread</name>
+      <task_type>Aperiodic_Type</task_type>
+      <cpu_name>parking_impl_Instance.cpu</cpu_name>
+      <address_space_name>parking_impl_Instance.main</address_space_name>
+      <capacity>50</capacity>
+      <deadline>1000</deadline>
+      <start_time>0</start_time>
+      <priority>5</priority>
+      <blocking_time>0</blocking_time>
+      <policy>Sched_Fifo</policy>
+      <offsets/>
+      <text_memory_size>0</text_memory_size>
+      <text_memory_start_address>0</text_memory_start_address>
+      <stack_memory_size>0</stack_memory_size>
+      <criticality>0</criticality>
+      <context_switch_overhead>0</context_switch_overhead>
+      <cfg_relocatable>false</cfg_relocatable>
+      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
+      <mils_integrity_level>Low</mils_integrity_level>
+      <mils_component>SLS</mils_component>
+      <mils_task>Application</mils_task>
+      <mils_compliant>false</mils_compliant>
+      <access_memory_number>0</access_memory_number>
+      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
+    </aperiodic_task>
+    <aperiodic_task id="7">
+      <object_type>Task_Object_Type</object_type>
+      <name>parking_impl_Instance.main.exit_image_processing_thread</name>
+      <task_type>Aperiodic_Type</task_type>
+      <cpu_name>parking_impl_Instance.cpu</cpu_name>
+      <address_space_name>parking_impl_Instance.main</address_space_name>
+      <capacity>100</capacity>
+      <deadline>1000</deadline>
+      <start_time>0</start_time>
+      <priority>5</priority>
+      <blocking_time>0</blocking_time>
+      <policy>Sched_Fifo</policy>
+      <offsets/>
+      <text_memory_size>0</text_memory_size>
+      <text_memory_start_address>0</text_memory_start_address>
+      <stack_memory_size>0</stack_memory_size>
+      <criticality>0</criticality>
+      <context_switch_overhead>0</context_switch_overhead>
+      <cfg_relocatable>false</cfg_relocatable>
+      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
+      <mils_integrity_level>Low</mils_integrity_level>
+      <mils_component>SLS</mils_component>
+      <mils_task>Application</mils_task>
+      <mils_compliant>false</mils_compliant>
+      <access_memory_number>0</access_memory_number>
+      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
+    </aperiodic_task>
+    <aperiodic_task id="8">
+      <object_type>Task_Object_Type</object_type>
+      <name>parking_impl_Instance.main.car_passed_gate_handler_thread</name>
       <task_type>Aperiodic_Type</task_type>
       <cpu_name>parking_impl_Instance.cpu</cpu_name>
       <address_space_name>parking_impl_Instance.main</address_space_name>
       <capacity>30</capacity>
-      <deadline>400</deadline>
+      <deadline>1000</deadline>
+      <start_time>0</start_time>
+      <priority>2</priority>
+      <blocking_time>0</blocking_time>
+      <policy>Sched_Fifo</policy>
+      <offsets/>
+      <text_memory_size>0</text_memory_size>
+      <text_memory_start_address>0</text_memory_start_address>
+      <stack_memory_size>0</stack_memory_size>
+      <criticality>0</criticality>
+      <context_switch_overhead>0</context_switch_overhead>
+      <cfg_relocatable>false</cfg_relocatable>
+      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
+      <mils_integrity_level>Low</mils_integrity_level>
+      <mils_component>SLS</mils_component>
+      <mils_task>Application</mils_task>
+      <mils_compliant>false</mils_compliant>
+      <access_memory_number>0</access_memory_number>
+      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
+    </aperiodic_task>
+    <aperiodic_task id="9">
+      <object_type>Task_Object_Type</object_type>
+      <name>parking_impl_Instance.main.calculate_price</name>
+      <task_type>Aperiodic_Type</task_type>
+      <cpu_name>parking_impl_Instance.cpu</cpu_name>
+      <address_space_name>parking_impl_Instance.main</address_space_name>
+      <capacity>30</capacity>
+      <deadline>1000</deadline>
       <start_time>0</start_time>
       <priority>4</priority>
       <blocking_time>0</blocking_time>
@@ -201,14 +201,149 @@
     </aperiodic_task>
     <aperiodic_task id="10">
       <object_type>Task_Object_Type</object_type>
+      <name>parking_impl_Instance.main.car_passed_exit_thread</name>
+      <task_type>Aperiodic_Type</task_type>
+      <cpu_name>parking_impl_Instance.cpu</cpu_name>
+      <address_space_name>parking_impl_Instance.main</address_space_name>
+      <capacity>30</capacity>
+      <deadline>1000</deadline>
+      <start_time>0</start_time>
+      <priority>2</priority>
+      <blocking_time>0</blocking_time>
+      <policy>Sched_Fifo</policy>
+      <offsets/>
+      <text_memory_size>0</text_memory_size>
+      <text_memory_start_address>0</text_memory_start_address>
+      <stack_memory_size>0</stack_memory_size>
+      <criticality>0</criticality>
+      <context_switch_overhead>0</context_switch_overhead>
+      <cfg_relocatable>false</cfg_relocatable>
+      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
+      <mils_integrity_level>Low</mils_integrity_level>
+      <mils_component>SLS</mils_component>
+      <mils_task>Application</mils_task>
+      <mils_compliant>false</mils_compliant>
+      <access_memory_number>0</access_memory_number>
+      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
+    </aperiodic_task>
+    <aperiodic_task id="11">
+      <object_type>Task_Object_Type</object_type>
       <name>parking_impl_Instance.main.check_slots_thread</name>
       <task_type>Aperiodic_Type</task_type>
       <cpu_name>parking_impl_Instance.cpu</cpu_name>
       <address_space_name>parking_impl_Instance.main</address_space_name>
       <capacity>40</capacity>
-      <deadline>400</deadline>
+      <deadline>1000</deadline>
       <start_time>0</start_time>
-      <priority>2</priority>
+      <priority>4</priority>
+      <blocking_time>0</blocking_time>
+      <policy>Sched_Fifo</policy>
+      <offsets/>
+      <text_memory_size>0</text_memory_size>
+      <text_memory_start_address>0</text_memory_start_address>
+      <stack_memory_size>0</stack_memory_size>
+      <criticality>0</criticality>
+      <context_switch_overhead>0</context_switch_overhead>
+      <cfg_relocatable>false</cfg_relocatable>
+      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
+      <mils_integrity_level>Low</mils_integrity_level>
+      <mils_component>SLS</mils_component>
+      <mils_task>Application</mils_task>
+      <mils_compliant>false</mils_compliant>
+      <access_memory_number>0</access_memory_number>
+      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
+    </aperiodic_task>
+    <aperiodic_task id="12">
+      <object_type>Task_Object_Type</object_type>
+      <name>parking_impl_Instance.main.start_exit_camera</name>
+      <task_type>Aperiodic_Type</task_type>
+      <cpu_name>parking_impl_Instance.cpu</cpu_name>
+      <address_space_name>parking_impl_Instance.main</address_space_name>
+      <capacity>30</capacity>
+      <deadline>1000</deadline>
+      <start_time>0</start_time>
+      <priority>6</priority>
+      <blocking_time>0</blocking_time>
+      <policy>Sched_Fifo</policy>
+      <offsets/>
+      <text_memory_size>0</text_memory_size>
+      <text_memory_start_address>0</text_memory_start_address>
+      <stack_memory_size>0</stack_memory_size>
+      <criticality>0</criticality>
+      <context_switch_overhead>0</context_switch_overhead>
+      <cfg_relocatable>false</cfg_relocatable>
+      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
+      <mils_integrity_level>Low</mils_integrity_level>
+      <mils_component>SLS</mils_component>
+      <mils_task>Application</mils_task>
+      <mils_compliant>false</mils_compliant>
+      <access_memory_number>0</access_memory_number>
+      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
+    </aperiodic_task>
+    <aperiodic_task id="13">
+      <object_type>Task_Object_Type</object_type>
+      <name>parking_impl_Instance.main.start_entry_camera</name>
+      <task_type>Aperiodic_Type</task_type>
+      <cpu_name>parking_impl_Instance.cpu</cpu_name>
+      <address_space_name>parking_impl_Instance.main</address_space_name>
+      <capacity>30</capacity>
+      <deadline>1000</deadline>
+      <start_time>0</start_time>
+      <priority>6</priority>
+      <blocking_time>0</blocking_time>
+      <policy>Sched_Fifo</policy>
+      <offsets/>
+      <text_memory_size>0</text_memory_size>
+      <text_memory_start_address>0</text_memory_start_address>
+      <stack_memory_size>0</stack_memory_size>
+      <criticality>0</criticality>
+      <context_switch_overhead>0</context_switch_overhead>
+      <cfg_relocatable>false</cfg_relocatable>
+      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
+      <mils_integrity_level>Low</mils_integrity_level>
+      <mils_component>SLS</mils_component>
+      <mils_task>Application</mils_task>
+      <mils_compliant>false</mils_compliant>
+      <access_memory_number>0</access_memory_number>
+      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
+    </aperiodic_task>
+    <aperiodic_task id="14">
+      <object_type>Task_Object_Type</object_type>
+      <name>parking_impl_Instance.main.should_open_exit_gate</name>
+      <task_type>Aperiodic_Type</task_type>
+      <cpu_name>parking_impl_Instance.cpu</cpu_name>
+      <address_space_name>parking_impl_Instance.main</address_space_name>
+      <capacity>30</capacity>
+      <deadline>1000</deadline>
+      <start_time>0</start_time>
+      <priority>3</priority>
+      <blocking_time>0</blocking_time>
+      <policy>Sched_Fifo</policy>
+      <offsets/>
+      <text_memory_size>0</text_memory_size>
+      <text_memory_start_address>0</text_memory_start_address>
+      <stack_memory_size>0</stack_memory_size>
+      <criticality>0</criticality>
+      <context_switch_overhead>0</context_switch_overhead>
+      <cfg_relocatable>false</cfg_relocatable>
+      <mils_confidentiality_level>UnClassified</mils_confidentiality_level>
+      <mils_integrity_level>Low</mils_integrity_level>
+      <mils_component>SLS</mils_component>
+      <mils_task>Application</mils_task>
+      <mils_compliant>false</mils_compliant>
+      <access_memory_number>0</access_memory_number>
+      <maximum_number_of_memory_request_per_job>0</maximum_number_of_memory_request_per_job>
+    </aperiodic_task>
+    <aperiodic_task id="15">
+      <object_type>Task_Object_Type</object_type>
+      <name>parking_impl_Instance.main.display_wallet</name>
+      <task_type>Aperiodic_Type</task_type>
+      <cpu_name>parking_impl_Instance.cpu</cpu_name>
+      <address_space_name>parking_impl_Instance.main</address_space_name>
+      <capacity>30</capacity>
+      <deadline>1000</deadline>
+      <start_time>0</start_time>
+      <priority>1</priority>
       <blocking_time>0</blocking_time>
       <policy>Sched_Fifo</policy>
       <offsets/>
