@@ -1,7 +1,14 @@
 PACKAGE parking_system
 PUBLIC
 WITH deployment;
+with Data_Model;
 --WITH Base_Types;
+
+
+data Alpha_Type
+	properties
+		Data_Model::Data_Representation => integer;
+end Alpha_Type;
 
 SYSTEM parking
 END parking;
@@ -74,7 +81,7 @@ DEVICE camera
 	FEATURES
 		system_bus: REQUIRES BUS ACCESS system_bus;
 		start_image_acquisition: in event port;
-		plates_data: out event data port;
+		plates_data: out event data port Alpha_Type;
 		
 	PROPERTIES
 		Compute_Execution_Time => 20ms .. 40ms;
@@ -103,8 +110,8 @@ DEVICE parking_display
 	FEATURES
 		system_bus: REQUIRES BUS ACCESS system_bus;
 
-		display_parking_address: in data port;
-		display_no_money_msg: in data port;
+		display_parking_address: in data port Alpha_Type;
+		display_no_money_msg: in data port Alpha_Type;
 	properties
 		Compute_Execution_Time => 50ms .. 100ms;
 		Deadline => 1000ms;
@@ -118,11 +125,11 @@ DEVICE network_module
 		sufficient_wallet_ballance: out event port;
 		insufficient_wallet_balance: out event port;
 		
-		tables_and_price: in event data port;
-		tables_wallet_check: in event data port;
+		tables_and_price: in event data port Alpha_Type;
+		tables_wallet_check: in event data port Alpha_Type;
 		
 		find_antoher_parking: in event port;
-		return_another_parking: out event data port;
+		return_another_parking: out event data port Alpha_Type;
 		
 	PROPERTIES
 		Compute_Execution_Time => 10ms .. 50ms;
@@ -132,9 +139,9 @@ end network_module;
 
 THREAD image_processing_thread
 	FEATURES
-		image_input: in event data port;
-		plate_number: out event data port;
-		
+		image_input: in event data port Alpha_Type;
+		plate_number: out event data port Alpha_Type;
+		 
 END image_processing_thread;
 
 THREAD IMPLEMENTATION image_processing_thread.impl
@@ -170,16 +177,20 @@ END image_processing_thread.impl2;
 
 SUBPROGRAM get_plate_data_from_image
 	FEATURES
-		plate_image: in parameter;
-		plate_number: out parameter;
+		plate_image: in parameter Alpha_Type;
+		plate_number: out parameter Alpha_Type;
+	PROPERTIES
+		source_language => (C);
+		source_name => "get_plate_data_from_image";
+		source_text => ("parking_system.c");	
 end get_plate_data_from_image;
 	
 
 THREAD check_slots_thread
 	FEATURES
-		check_slots: in event port;
-		open_gate: out event data port;
-		find_another: out event data port;
+		check_slots: in event port ;
+		open_gate: out event data port Alpha_Type;
+		find_another: out event data port Alpha_Type;
 END check_slots_thread;
 
 THREAD IMPLEMENTATION check_slots_thread.impl
@@ -199,14 +210,18 @@ END check_slots_thread.impl;
 
 SUBPROGRAM check_slots_function
 	FEATURES 
-		slot_available: out parameter;
-		slot_unavailable: out parameter;
+		slot_available: out parameter Alpha_Type;
+		slot_unavailable: out parameter Alpha_Type;
+	PROPERTIES
+		source_language => (C);
+		source_name => "check_slots_function";
+		source_text => ("parking_system.c");	
 END check_slots_function;
 	
 THREAD car_passed_gate_handler_thread
 	FEATURES
 		car_on_entry_gate_passing_sensor: in event port;
-		close_entry_gate: out event port;
+		close_entry_gate: out event data port Alpha_Type;
 end car_passed_gate_handler_thread;
 
 THREAD IMPLEMENTATION car_passed_gate_handler_thread.impl
@@ -215,7 +230,7 @@ THREAD IMPLEMENTATION car_passed_gate_handler_thread.impl
 			close_entry_gate_and_increment: SUBPROGRAM close_entry_gate_and_increment;
 		};
 CONNECTIONS
-	c1: port close_entry_gate_and_increment.close_entry_gate -> close_entry_gate;
+	c1: parameter close_entry_gate_and_increment.close_entry_gate -> close_entry_gate;
 PROPERTIES
 	Priority => 5;
 	Dispatch_Protocol => Aperiodic;
@@ -225,14 +240,18 @@ end car_passed_gate_handler_thread.impl;
 
 SUBPROGRAM close_entry_gate_and_increment
 	FEATURES
-		close_entry_gate: out event port;	
+		close_entry_gate: out parameter Alpha_Type;	
+	PROPERTIES
+		source_language => (C);
+		source_name => "close_entry_gate_and_increment";
+		source_text => ("parking_system.c");	
 end close_entry_gate_and_increment;
 	
 
 THREAD calculate_price
 	FEATURES
-		plate_number: in event data port;
-		plate_and_calculated_price: out event data port;
+		plate_number: in event data port Alpha_Type;
+		plate_and_calculated_price: out event data port Alpha_Type;
 end calculate_price;
 
 THREAD IMPLEMENTATION calculate_price.impl
@@ -252,14 +271,14 @@ end calculate_price.impl;
 	
 	SUBPROGRAM calculate_price_for_given_plate
 		FEATURES
-			plate_number: in parameter;
-			plate_and_calculated_price: out parameter;
+			plate_number: in parameter Alpha_Type;
+			plate_and_calculated_price: out parameter Alpha_Type;
 	end calculate_price_for_given_plate;
 
 THREAD car_passed_exit_thread
 	FEATURES
 		car_detected: in event port;
-		close_gate: out event port;
+		close_gate: out event data port Alpha_Type;
 end car_passed_exit_thread;
 
 THREAD IMPLEMENTATION car_passed_exit_thread.impl
@@ -268,7 +287,7 @@ THREAD IMPLEMENTATION car_passed_exit_thread.impl
 			close_exit_gate_and_decrement: SUBPROGRAM close_exit_gate_and_decrement;
 		};
 	CONNECTIONS
-		c1: port close_exit_gate_and_decrement.close_exit_gate -> close_gate;
+		c1: parameter close_exit_gate_and_decrement.close_exit_gate -> close_gate;
 	PROPERTIES
 		Priority => 5;
 		Dispatch_Protocol => Aperiodic;
@@ -278,13 +297,13 @@ end car_passed_exit_thread.impl;
 	
 SUBPROGRAM close_exit_gate_and_decrement
 	FEATURES
-		close_exit_gate: out event port;	
+		close_exit_gate: out parameter Alpha_Type;	
 end close_exit_gate_and_decrement;
 
 THREAD display_message_thread
 	FEATURES
-		data_input: in data port;
-		data_output: out data port;
+		data_input: in data port Alpha_Type;
+		data_output: out data port Alpha_Type; 
 		
 end display_message_thread;
 
@@ -306,14 +325,19 @@ end display_message_thread.addres_impl;
 	
 SUBPROGRAM display_parking_address
 	FEATURES
-		parking_data: in parameter;
-		parking_address: out parameter;	
+		parking_data: in parameter Alpha_Type;
+		parking_address: out parameter Alpha_Type;
+	PROPERTIES
+		source_language => (C);
+		source_name => "display_parking_address";
+		source_text => ("parking_system.c");	
+		
 end display_parking_address;
 
 THREAD display_wallet_info
 FEATURES
 	insufficient_wallet_balance: in event port;
-	display_message: out data port;
+	display_message: out data port Alpha_Type;
 
 END display_wallet_info;
 
@@ -334,7 +358,11 @@ end display_wallet_info.impl;
 	
 SUBPROGRAM display_wallet_info_function
 	FEATURES
-		message: out parameter;	
+		message: out parameter Alpha_Type;	
+	PROPERTIES
+		source_language => (C);
+		source_name => "display_wallet_info_function";
+		source_text => ("parking_system.c");	
 end display_wallet_info_function;
 
 THREAD open_exit_gate
@@ -404,7 +432,11 @@ end start_camera.exit_impl;
 	
 SUBPROGRAM start_camera_function
 	FEATURES
-		start_camera: out event port;	
+		start_camera: out event port;
+	PROPERTIES
+		source_language => (C);
+		source_name => "start_camera_function";
+		source_text => ("parking_system.c");	
 end start_camera_function;
 
 PROCESS controller
@@ -417,14 +449,14 @@ PROCESS controller
 		car_on_entry_gate_passing_sensor: in event port;
 		sufficient_wallet_balance: in event port;
 		find_another: out event port;
-		plate_and_calculated_price: out event data port;
-		image_input: in event data port;
-		exit_image_input: in event data port;
-		tables_wallet_check: out event data port;
-		another_parking_data: in data port;
-		another_parking_address: out data port;
+		plate_and_calculated_price: out event data port Alpha_Type;
+		image_input: in event data port Alpha_Type;
+		exit_image_input: in event data port Alpha_Type;
+		tables_wallet_check: out event data port Alpha_Type;
+		another_parking_data: in data port Alpha_Type;
+		another_parking_address: out data port Alpha_Type;
 		insufficient_wallet_balance: in event port;
-		wallet_balance_notification: out data port;
+		wallet_balance_notification: out data port Alpha_Type;
 		car_detected_on_entrance: in event port;
 		acquire_plates_image_on_entrance: out event port;
 		car_detected_on_exit: in event port;
