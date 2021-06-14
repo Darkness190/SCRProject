@@ -59,21 +59,43 @@ SYSTEM IMPLEMENTATION parking.impl
 		ba9: bus access exit_driveway_sensor.system_bus -> system_bus;
 		ba10: bus access system_bus -> network_module.system_bus;
 
-		parking_impl_new_connection: port entry_driveway_sensor.car_detected -> main.car_detected_on_entrance;
-		parking_impl_new_connection2: port main.acquire_plates_image_on_entrance -> entry_camera.start_image_acquisition;
-		parking_impl_new_connection3: port exit_driveway_sensor.car_detected -> main.car_detected_on_exit;
-		parking_impl_new_connection4: port main.acquire_plates_image_on_exit -> exit_camera.start_image_acquisition;
-		parking_impl_new_connection5: port network_module.insufficient_wallet_balance -> main.insufficient_wallet_balance;
+		c17: port entry_driveway_sensor.car_detected -> main.car_detected_on_entrance;
+		c18: port main.acquire_plates_image_on_entrance -> entry_camera.start_image_acquisition;
+		c19: port exit_driveway_sensor.car_detected -> main.car_detected_on_exit;
+		c20: port main.acquire_plates_image_on_exit -> exit_camera.start_image_acquisition;
+		c21: port network_module.insufficient_wallet_balance -> main.insufficient_wallet_balance;
 
-		parking_impl_new_connection7: port network_module.return_another_parking -> main.another_parking_data;
+		c22: port network_module.return_another_parking -> main.another_parking_data;
 
-		parking_impl_new_connection9: port network_module.request_delivered -> main.payment_request_delivered;
-		parking_impl_new_connection10: port main.open_exit_gate -> exit_gate.open_gate;
-		parking_impl_new_connection6: port main.wallet_balance_notification -> parking_display.display_no_money_msg;
-		parking_impl_new_connection8: port main.another_parking_address -> parking_display.display_parking_address;
+		c23: port network_module.request_delivered -> main.payment_request_delivered;
+		c24: port main.open_exit_gate -> exit_gate.open_gate;
+		c25: port main.wallet_balance_notification -> parking_display.display_no_money_msg;
+		c26: port main.another_parking_address -> parking_display.display_parking_address;
+		
 	properties
 		Actual_Memory_Binding => (REFERENCE (ram)) APPLIES TO main;
 		Actual_Processor_Binding => (REFERENCE (cpu)) APPLIES TO main;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c1;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c4;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c5;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c6;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c7;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c8;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c9;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c10;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c11;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c13;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c16;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c17;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c18;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c19;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c20;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c21;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c22;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c23;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c24;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c25;
+		Actual_Connection_Binding => (REFERENCE (system_bus)) APPLIES TO c26;
 
 END parking.impl;
 
@@ -377,10 +399,7 @@ THREAD IMPLEMENTATION open_exit_gate.impl
 		subprog: {
 			open_exit_gate_function: SUBPROGRAM open_exit_gate_function;
 		};
-	CONNECTIONS
-		c1: port open_exit_gate_function.open_gate -> open_gate;
-	
-	PROPERTIES
+	properties
 		Priority => 3;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
@@ -388,8 +407,6 @@ THREAD IMPLEMENTATION open_exit_gate.impl
 end open_exit_gate.impl;
 	
 SUBPROGRAM open_exit_gate_function
-	FEATURES
-		open_gate: out event port;	
 end open_exit_gate_function;
 
 THREAD start_camera
@@ -404,8 +421,6 @@ THREAD IMPLEMENTATION start_camera.entry_impl
 		subprog: {
 			start_camera_function: SUBPROGRAM start_camera_function;
 		};
-	CONNECTIONS
-		c1: port start_camera_function.start_camera -> start_camera;
 	
 	PROPERTIES
 		Priority => 6;
@@ -419,10 +434,7 @@ THREAD IMPLEMENTATION start_camera.exit_impl
 		subprog: {
 			start_camera_function: SUBPROGRAM start_camera_function;
 		};
-	CONNECTIONS
-		c1: port start_camera_function.start_camera -> start_camera;
-	
-	PROPERTIES
+	properties
 		Priority => 6;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
@@ -431,12 +443,10 @@ THREAD IMPLEMENTATION start_camera.exit_impl
 end start_camera.exit_impl;
 	
 SUBPROGRAM start_camera_function
-	FEATURES
-		start_camera: out event port;
-	PROPERTIES
+	properties
 		source_language => (C);
 		source_name => "start_camera_function";
-		source_text => ("parking_system.c");	
+		source_text => ("parking_system.c");
 end start_camera_function;
 
 PROCESS controller
@@ -517,6 +527,8 @@ PROCESSOR CPU
 END CPU;
 
 BUS system_bus
+properties
+            deployment::transport_api => bsd_sockets;
 END system_bus;
 
 MEMORY RAM

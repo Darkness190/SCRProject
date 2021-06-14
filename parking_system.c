@@ -1,20 +1,27 @@
 #include <stdio.h>
 #include <time.h>
-
-srand(time(NULL));
+#include <stdlib.h>
 
 int car_detected = 0;
 char *plate_number[8];
 int sufficient_funds = -1;
 int slots_occ = 0;
 int enough_slots = 0;
+int initialized = 0;
 
 void start_camera_function()
 {
+	
+	if(initialized == 0)
+	{
+		srand(time(NULL));
+		initialized = 1;
+	}
+
 	printf("--- start_camera_function ---\n");
 	printf("(start_camera_function) Czy podjechał samochód?\n");
-	scanf("%d", car_detected);
-	printf("(start_camera_function) Zapisuję %d do car_detected\n", *car_detected);
+	scanf("%d", &car_detected);
+	printf("(start_camera_function) Zapisuję %d do car_detected\n", car_detected);
 }
 
 void get_plate_data_from_image(int plate_image, int *plate_number)
@@ -28,7 +35,7 @@ void get_plate_data_from_image(int plate_image, int *plate_number)
 		car_detected = 0;
 		
 		sufficient_funds = rand() % 2;
-		printf("(get_plate_data_from_image) Wylosowałem %d do sufficient_funds\n", sufficient_funds)
+		printf("(get_plate_data_from_image) Wylosowałem %d do sufficient_funds\n", sufficient_funds);
 	}
 }
 
@@ -37,11 +44,11 @@ void check_slots_function(int *slot_available, int *slot_unavailable)
 	if(sufficient_funds) 
 	{
 		printf("--- check_slots_function ---\n");
-		printf("(check_slots_function) Zajętych miejsc: (%d/5)\n", slots);
+		printf("(check_slots_function) Zajętych miejsc: (%d/5)\n", slots_occ);
 		if(slots_occ < 5) 
 		{
 			enough_slots = 1;
-			printf("(check_slots_function) Otwieram bramę\n")
+			printf("(check_slots_function) Otwieram bramę\n");
 		}
 		else 
 		{
