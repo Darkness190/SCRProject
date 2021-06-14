@@ -107,7 +107,7 @@ DEVICE camera
 		
 	PROPERTIES
 		Compute_Execution_Time => 20ms .. 40ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 END camera;
 
 DEVICE gate 
@@ -116,7 +116,7 @@ DEVICE gate
 		close_gate: in event port;
 	PROPERTIES
 		Compute_Execution_Time => 20ms .. 40ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 END gate;
 
 DEVICE sensor 
@@ -125,7 +125,7 @@ DEVICE sensor
 		system_bus: REQUIRES BUS ACCESS system_bus;
 	PROPERTIES
 		Compute_Execution_Time => 50ms .. 100ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 END sensor;
 	
 DEVICE parking_display
@@ -136,7 +136,7 @@ DEVICE parking_display
 		display_no_money_msg: in data port Alpha_Type;
 	properties
 		Compute_Execution_Time => 50ms .. 100ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 END parking_display;
 
 DEVICE network_module
@@ -155,7 +155,7 @@ DEVICE network_module
 		
 	PROPERTIES
 		Compute_Execution_Time => 10ms .. 50ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 
 end network_module;
 
@@ -178,7 +178,7 @@ THREAD IMPLEMENTATION image_processing_thread.impl
 		Priority => 4;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 50ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 END image_processing_thread.impl;
 
 THREAD IMPLEMENTATION image_processing_thread.impl2
@@ -193,7 +193,7 @@ THREAD IMPLEMENTATION image_processing_thread.impl2
 		Priority => 4;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 100ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 END image_processing_thread.impl2;
 
 
@@ -227,7 +227,7 @@ THREAD IMPLEMENTATION check_slots_thread.impl
 		Priority => 3;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 40ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 END check_slots_thread.impl;
 
 SUBPROGRAM check_slots_function
@@ -257,7 +257,7 @@ PROPERTIES
 	Priority => 5;
 	Dispatch_Protocol => Aperiodic;
 	Compute_Execution_Time => 10ms .. 30ms;
-	Deadline => 1000ms;
+	Deadline => 500ms;
 end car_passed_gate_handler_thread.impl;
 
 SUBPROGRAM close_entry_gate_and_increment
@@ -288,7 +288,7 @@ THREAD IMPLEMENTATION calculate_price.impl
 		Priority => 2;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 end calculate_price.impl;
 	
 	SUBPROGRAM calculate_price_for_given_plate
@@ -314,7 +314,7 @@ THREAD IMPLEMENTATION car_passed_exit_thread.impl
 		Priority => 5;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 end car_passed_exit_thread.impl;
 	
 SUBPROGRAM close_exit_gate_and_decrement
@@ -342,7 +342,7 @@ THREAD IMPLEMENTATION display_message_thread.addres_impl
 		Priority => 1;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 end display_message_thread.addres_impl;
 	
 SUBPROGRAM display_parking_address
@@ -375,7 +375,7 @@ THREAD IMPLEMENTATION display_wallet_info.impl
 		Priority => 1;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 end display_wallet_info.impl;
 	
 SUBPROGRAM display_wallet_info_function
@@ -403,7 +403,7 @@ THREAD IMPLEMENTATION open_exit_gate.impl
 		Priority => 3;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 end open_exit_gate.impl;
 	
 SUBPROGRAM open_exit_gate_function
@@ -426,7 +426,7 @@ THREAD IMPLEMENTATION start_camera.entry_impl
 		Priority => 6;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 end start_camera.entry_impl;
 	
 THREAD IMPLEMENTATION start_camera.exit_impl
@@ -438,7 +438,7 @@ THREAD IMPLEMENTATION start_camera.exit_impl
 		Priority => 6;
 		Dispatch_Protocol => Aperiodic;
 		Compute_Execution_Time => 10ms .. 30ms;
-		Deadline => 1000ms;
+		Deadline => 500ms;
 
 end start_camera.exit_impl;
 	
